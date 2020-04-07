@@ -11,16 +11,15 @@ class DeckList extends Component {
 
   render() {
     let { decks } = this.props.global;
-
+    let {navigation} = this.props;
     if (decks) {
       decks = Object.values(decks);
       return (
         <View style={styles.container}>
-          <Text style={styles.item}>Hello</Text>
           <FlatList
             style={styles.item}
             data={decks}
-            renderItem={({ item }) => <DeckCard deck={item}></DeckCard>}
+            renderItem={({ item }) => <DeckCard navigation={navigation} deck={item}></DeckCard>}
             keyExtractor={(item) => item.title}
           />
         </View>
@@ -44,7 +43,6 @@ const styles = StyleSheet.create({
   item: {
     backgroundColor: "#F5FCFF",
     alignSelf: "stretch",
-    textAlign: "center",
   },
 });
 
