@@ -21,8 +21,8 @@ export function isDeckWithSameName(title) {
 export function isQuestionWithSameNameInDeck(question, deckId) {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY).then((result) => {
     result = JSON.parse(result);
-    if (result && result[deckId].questions[question.title]) {
-      return result[deckId].questions[question.title];
+    if (result && result[deckId].questions[question]) {
+      return result[deckId].questions[question];
     }
     {
       return undefined;
@@ -49,16 +49,17 @@ export function addQuestion(question, deckId) {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY).then((results) => {
     const data = JSON.parse(results);
     const deck = data[deckId];
-    deck.questions.push(question.title);
+    deck.questions.push(question.question);
     data[deckId] = undefined;
     delete data[deckId];
-    addDeck(deck);
-    AsyncStorage.mergeItem(
+    addDeck(deck).then((result) => {
+      AsyncStorage.mergeItem(
         QUESTION_STORAGE_KEY,
         JSON.stringify({
-          [question.title]: question,
+          [question.question]: question,
         })
       );
+    });
   });
 }
 

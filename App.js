@@ -20,6 +20,7 @@ export default class App extends Component {
   fetchDecks() {
     fetchAllDecks().then((decks) => {
       this.setState({ decks: decks });
+      console.log(this.state.decks);
     });
   }
 
