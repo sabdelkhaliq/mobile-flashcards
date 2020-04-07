@@ -1,17 +1,11 @@
 import React, { Component } from "react";
 
-class Deck extends Component {
-  constructor({ props }) {
-    super(props);
-  }
+import { Text, View, StyleSheet } from "react-native";
 
-  render() {
-    return (
-      <View>
-        <Text>Deck...</Text>
-      </View>
-    );
-  }
+export default function Deck({ props }) {
+  return (
+    <View>
+      <Text>In Deck</Text>
+    </View>
+  );
 }
-
-export default Deck;

@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
+import Tabs from "./navigators/Tabs";
 import { fetchAllDecks } from "./utils/Storage";
-import DeckList from "./components/DeckList";
-import NewDeck from "./components/NewDeck";
-import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import MyContext from "./MyContext";
 
-export default class App extends React.Component {
+export default class App extends Component {
   constructor({ props }) {
     super(props);
     this.state = {
@@ -26,18 +24,15 @@ export default class App extends React.Component {
   }
 
   render() {
-    const Tab = createBottomTabNavigator();
     return (
-      <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name="Deck List">
-            {(props) => <DeckList {...props} decks={this.state.decks} />}
-          </Tab.Screen>
-          <Tab.Screen name="Add Deck">
-            {(props) => <NewDeck {...props} fetchDecks={this.fetchDecks} />}
-          </Tab.Screen>
-        </Tab.Navigator>
-      </NavigationContainer>
+      <MyContext.Provider
+        value={{
+          decks: this.state.decks,
+          fetchDecks: this.fetchDecks,
+        }}
+      >
+        <Tabs />
+      </MyContext.Provider>
     );
   }
 }
