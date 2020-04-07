@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import NewDeck from "./NewDeck";
 import DeckCard from "./DeckCard";
+import { withGlobalContext } from "../MyContext";
 
 class DeckList extends Component {
   constructor({ props }) {
@@ -9,7 +10,7 @@ class DeckList extends Component {
   }
 
   render() {
-    let { decks } = this.props;
+    let { decks } = this.props.global;
 
     if (decks) {
       decks = Object.values(decks);
@@ -28,7 +29,6 @@ class DeckList extends Component {
       return (
         <View style={styles.container}>
           <Text style={styles.item}>Start adding your decks</Text>
-          <NewDeck style={styles.item}></NewDeck>
         </View>
       );
   }
@@ -48,4 +48,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DeckList;
+export default withGlobalContext(DeckList);

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { isDeckWithSameName, addDeck } from "../utils/Storage";
+import { withGlobalContext } from "../MyContext";
 
 class NewDeck extends Component {
   constructor({ props }) {
@@ -17,7 +18,7 @@ class NewDeck extends Component {
 
   addNewDeck() {
     let { title, questions } = this.state;
-    let { fetchDecks } = this.props;
+    let { fetchDecks } = this.props.global;
 
     if (!title) this.setState({ error: "Enter a title for your Deck" });
     else
@@ -65,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NewDeck;
+export default withGlobalContext(NewDeck);

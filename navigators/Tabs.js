@@ -4,26 +4,28 @@ import DeckList from "../components/DeckList";
 import NewDeck from "../components/NewDeck";
 import { NavigationContainer } from "@react-navigation/native";
 import MyContext from "../MyContext";
+import { createStackNavigator } from "@react-navigation/stack";
+import Deck from "../components/Deck";
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+function StackNavComp() {
+  return (
+    <Stack.Navigator initialRouteName="DeckList" headerMode="screen">
+      <Stack.Screen name="DeckList" component={DeckList}/>
+      <Stack.Screen name="Deck" component={Deck} />
+    </Stack.Navigator>
+  );
+}
 
 export default function Tabs() {
-  return (<NavigationContainer>
-    <MyContext.Consumer>
-      {(context) => (
-        
-          <Tab.Navigator>
-            <Tab.Screen name="Home">
-              {(props) => <DeckList {...props} decks={context.decks} />}
-            </Tab.Screen>
-            <Tab.Screen name="Add Deck">
-              {(props) => (
-                <NewDeck {...props} fetchDecks={context.fetchDecks} />
-              )}
-            </Tab.Screen>
-          </Tab.Navigator>
-      )}
-    </MyContext.Consumer>
+  return (
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="StackNavComp" component={StackNavComp} />
+        <Tab.Screen name="Add Deck" component={NewDeck} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
