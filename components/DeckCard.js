@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { Card, ListItem, Button, Icon } from "react-native-elements";
+import { StyleSheet, Text } from "react-native";
+import { Card } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Text, StyleSheet } from "react-native";
-import Deck from "./Deck";
 
 class DeckCard extends Component {
   constructor({ props }) {
@@ -14,9 +13,9 @@ class DeckCard extends Component {
     return (
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate("StackNavComp", {
+          navigation.navigate("Decks", {
             screen: "Deck",
-            params: { deck: deck },
+            params: { deckTitle: deck.title },
           })
         }
       >

@@ -12,7 +12,7 @@ import NewQuestion from "../components/NewQuestion";
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-function StackNavComp() {
+function Decks() {
   return (
     <Stack.Navigator initialRouteName="DeckList" headerMode="screen">
       <Stack.Screen name="DeckList" component={DeckList} />
@@ -28,7 +28,7 @@ export default function Tabs() {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="StackNavComp" component={StackNavComp} />
+        <Tab.Screen name="Decks" component={Decks} />
         <Tab.Screen name="Add Deck" component={NewDeck} />
       </Tab.Navigator>
     </NavigationContainer>

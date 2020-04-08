@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { getDeckById, addDeck } from "../utils/Storage";
+import { isDeckTitleRepeated, addDeck } from "../utils/Storage";
 import { withGlobalContext } from "../MyContext";
 
 class NewDeck extends Component {
@@ -9,28 +9,42 @@ class NewDeck extends Component {
     super(props);
     this.state = {
       title: "",
-      questions: [],
       error: "",
     };
     this.onChangeDeckTitle = this.onChangeDeckTitle.bind(this);
     this.addNewDeck = this.addNewDeck.bind(this);
+    this.refereshDecks = this.refereshDecks.bind(this);
   }
 
   addNewDeck() {
-    let { title, questions } = this.state;
-    let { fetchDecks } = this.props.global;
+    let { title } = this.state;
+    let { navigation } = this.props;
+    let { resetStateFlag } = this.props.global;
+
+    const questions = [];
 
     if (!title) this.setState({ error: "Enter a title for your Deck" });
     else
-      getDeckById(title).then((result) =>
+      isDeckTitleRepeated(title).then((result) =>
         result
           ? this.setState({ error: "You have a deck with the same title" })
-          : addDeck({ title, questions }).then(fetchDecks())
+          : addDeck({ title, questions }, this.refereshDecks).then(() => {
+              //resetStateFlag();
+              navigation.navigate("Decks", {
+                screen: "Deck",
+                params: { deckTitle: title },
+              });
+            })
       );
   }
 
   onChangeDeckTitle(text) {
     this.setState({ title: text, error: "" });
+  }
+
+  refereshDecks() {
+    let { fetchDecks } = this.props.global;
+    fetchDecks();
   }
 
   render() {

@@ -6,26 +6,27 @@ import { DECKS_STORAGE_KEY, QUESTION_STORAGE_KEY } from "./StorageKeys";
 // Question:
 // { "title":'',"answer":}
 
-export function getDeckById(deckId) {
+export function isDeckTitleRepeated(deckId) {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY).then((result) => {
     result = JSON.parse(result);
     if (result && result[deckId]) {
-      return result[deckId];
+      return true;
     }
     {
-      return undefined;
+      return false;
     }
   });
 }
 
-export function isQuestionWithSameNameInDeck(question, deckId) {
+export function isQuestionRepeatedInDeck(question, deckId) {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY).then((result) => {
     result = JSON.parse(result);
-    if (result && result[deckId].questions[question]) {
-      return result[deckId].questions[question];
+    let questions = result[deckId].questions;
+    if (result && questions.includes(question)) {
+      return true;
     }
     {
-      return undefined;
+      return false;
     }
   });
 }
@@ -36,12 +37,25 @@ export function fetchAllDecks() {
   );
 }
 
-export function addDeck(deckData) {
+export function getQuestionsInDeck(deckTitle) {
+  return AsyncStorage.getItem(QUESTION_STORAGE_KEY).then((result) => {
+    result = JSON.parse(result);
+    questions = Object.values(result);
+
+    questions = questions.filter((question) => {
+      question.deckTitle === deckTitle;
+    });
+    console.log(questions);
+  });
+}
+
+export function addDeck(deckData, refereshDecks) {
   return AsyncStorage.mergeItem(
     DECKS_STORAGE_KEY,
     JSON.stringify({
       [deckData.title]: deckData,
-    })
+    }),
+    refereshDecks
   );
 }
 
@@ -57,7 +71,11 @@ export function addQuestion(question, deckId, refereshDecks) {
         return data;
       })
       .then((data) =>
-        AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data), refereshDecks)
+        AsyncStorage.setItem(
+          DECKS_STORAGE_KEY,
+          JSON.stringify(data),
+          refereshDecks
+        )
       ),
     AsyncStorage.mergeItem(
       QUESTION_STORAGE_KEY,
@@ -66,6 +84,10 @@ export function addQuestion(question, deckId, refereshDecks) {
       })
     ),
   ]);
+}
+
+export function clearStorage() {
+  AsyncStorage.clear();
 }
 
 // // export function addQuestionToDeck ({ questionData, deckId }) {

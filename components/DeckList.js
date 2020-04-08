@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
-import NewDeck from "./NewDeck";
 import DeckCard from "./DeckCard";
 import { withGlobalContext } from "../MyContext";
 

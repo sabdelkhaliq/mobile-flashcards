@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { addQuestion, isQuestionWithSameNameInDeck, getDeckById } from "../utils/Storage";
 import { withGlobalContext } from "../MyContext";
+import { addQuestion, isQuestionRepeatedInDeck } from "../utils/Storage";
 
 class NewQuestion extends Component {
   constructor(props) {
@@ -21,23 +21,37 @@ class NewQuestion extends Component {
   addCardQuestion() {
     const { deckTitle } = this.props.route.params;
     const { answer, question } = this.state;
-    
+    const { navigation } = this.props;
+    let { resetStateFlag } = this.props.global;
+
 
     if (!question) this.setState({ error: "Enter the question of the card" });
-    else if(!answer) this.setState({ error: "Enter an answer" });
+    else if (!answer) this.setState({ error: "Enter an answer" });
     else
-      isQuestionWithSameNameInDeck(question, deckTitle).then((result) =>
-        result
-          ? this.setState({
-              error: "You have a card with the same question in this deck",
-            })
-          : addQuestion({ question, answer }, deckTitle, this.refereshDecks)
-      );
+      isQuestionRepeatedInDeck(question, deckTitle).then((result) => {
+        if (result) {
+          this.setState({
+            error: "You have a card with the same question in this deck",
+          });
+        } else {
+          addQuestion(
+            { question, answer, deckTitle },
+            deckTitle,
+            this.refereshDecks
+          ).then(() => {
+            //resetStateFlag();
+            navigation.navigate("Decks", {
+              screen: "Deck",
+              params: { deckTitle: deckTitle },
+            });
+          });
+        }
+      });
   }
 
-  refereshDecks(){
+  refereshDecks() {
     let { fetchDecks } = this.props.global;
-    fetchDecks()
+    fetchDecks();
   }
 
   onChangeQuestion(text) {
