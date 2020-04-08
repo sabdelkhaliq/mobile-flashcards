@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { isDeckWithSameName, addDeck } from "../utils/Storage";
+import { getDeckById, addDeck } from "../utils/Storage";
 import { withGlobalContext } from "../MyContext";
 
 class NewDeck extends Component {
@@ -22,7 +22,7 @@ class NewDeck extends Component {
 
     if (!title) this.setState({ error: "Enter a title for your Deck" });
     else
-      isDeckWithSameName(title).then((result) =>
+      getDeckById(title).then((result) =>
         result
           ? this.setState({ error: "You have a deck with the same title" })
           : addDeck({ title, questions }).then(fetchDecks())

@@ -19,7 +19,9 @@ export default class App extends Component {
 
   fetchDecks() {
     fetchAllDecks().then((decks) => {
-      this.setState({ decks: decks });
+      console.log('2222');
+      this.setState({ decks: Object.keys(decks).sort().reduce((r, k) => (r[k] = decks[k], r), {}) });
+      console.log("Fetch Decks........")
       console.log(this.state.decks);
     });
   }

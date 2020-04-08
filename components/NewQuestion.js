@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { addQuestion, isQuestionWithSameNameInDeck } from "../utils/Storage";
+import { addQuestion, isQuestionWithSameNameInDeck, getDeckById } from "../utils/Storage";
 import { withGlobalContext } from "../MyContext";
 
 class NewQuestion extends Component {
@@ -15,12 +15,13 @@ class NewQuestion extends Component {
     this.onChangeQuestion = this.onChangeQuestion.bind(this);
     this.onChangeAnswer = this.onChangeAnswer.bind(this);
     this.addCardQuestion = this.addCardQuestion.bind(this);
+    this.refereshDecks = this.refereshDecks.bind(this);
   }
 
   addCardQuestion() {
     const { deckTitle } = this.props.route.params;
     const { answer, question } = this.state;
-    let { fetchDecks } = this.props.global;
+    
 
     if (!question) this.setState({ error: "Enter the question of the card" });
     else if(!answer) this.setState({ error: "Enter an answer" });
@@ -30,8 +31,13 @@ class NewQuestion extends Component {
           ? this.setState({
               error: "You have a card with the same question in this deck",
             })
-          : addQuestion({ question, answer }, deckTitle).then(fetchDecks())
+          : addQuestion({ question, answer }, deckTitle, this.refereshDecks)
       );
+  }
+
+  refereshDecks(){
+    let { fetchDecks } = this.props.global;
+    fetchDecks()
   }
 
   onChangeQuestion(text) {

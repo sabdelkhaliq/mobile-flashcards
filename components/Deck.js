@@ -5,6 +5,9 @@ import { withGlobalContext } from "../MyContext";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 class Deck extends React.Component {
+  componentDidMount() {
+    console.log("did mount");
+  }
   render() {
     const { deck } = this.props.route.params;
     const { navigation } = this.props;
