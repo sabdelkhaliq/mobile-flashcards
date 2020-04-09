@@ -40,12 +40,11 @@ export function fetchAllDecks() {
 export function getQuestionsInDeck(deckTitle) {
   return AsyncStorage.getItem(QUESTION_STORAGE_KEY).then((result) => {
     result = JSON.parse(result);
-    questions = Object.values(result);
-
-    questions = questions.filter((question) => {
-      question.deckTitle === deckTitle;
-    });
-    console.log(questions);
+    let questions = Object.values(result);
+    let questionsArr = questions.filter(
+      (question) => question.deckTitle.localeCompare(deckTitle) === 0
+    );
+    return questionsArr;
   });
 }
 
