@@ -41,12 +41,14 @@ function Decks() {
       <Stack.Screen
         name="Quiz"
         component={Quiz}
-        options={{ headerShown: false }}
+        options={{
+          tabBarVisible: false,
+        }}
       />
       <Stack.Screen
         name="QuizSummary"
         component={QuizSummary}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, tabBarVisible: false }}
       />
     </Stack.Navigator>
   );

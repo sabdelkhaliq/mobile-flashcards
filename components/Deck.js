@@ -1,21 +1,15 @@
 import React, { Component } from "react";
-
-import { Text, View, StyleSheet } from "react-native";
-import { withGlobalContext } from "../MyContext";
+import { StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { getQuestionsInDeck } from "../utils/Storage";
+import { withGlobalContext } from "../MyContext";
+
 
 class Deck extends Component {
   constructor({ props }) {
     super(props);
-    this.questions = [];
-    this.deckTitle = "";
+
   }
-  componentDidMount() {
-    getQuestionsInDeck(this.deckTitle).then((result) => {
-      this.questions = result;
-    });
-  }
+
 
   render() {
     const { navigation } = this.props;
@@ -29,7 +23,6 @@ class Deck extends Component {
       let decksArr = Object.values(decks);
       const deck = decksArr[decksArr.findIndex((d) => d.title === deckTitle)];
 
-      this.deckTitle = deckTitle;
       
       return (
         <View style={styles.container}>
@@ -51,7 +44,7 @@ class Deck extends Component {
             onPress={() =>
               navigation.navigate("Decks", {
                 screen: "Quiz",
-                params: { questions: this.questions,
+                params: { 
                   deckTitle: deckTitle },
               })
             }

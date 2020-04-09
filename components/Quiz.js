@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { getQuestionsInDeck } from "../utils/Storage";
 
 class Quiz extends Component {
   constructor({ props }) {
@@ -17,10 +18,12 @@ class Quiz extends Component {
   }
 
   componentDidMount() {
-    const { questions } = this.props.route.params;
-
-    this.setState({ questions: questions });
+    const { deckTitle } = this.props.route.params;
+    getQuestionsInDeck(deckTitle).then((result) => {
+      this.setState({questions:result});
+    });
   }
+
   toggleAnswer() {
     this.setState((prevState) => ({
       answerShown: !prevState.answerShown,
@@ -35,7 +38,7 @@ class Quiz extends Component {
     if (currentQuestion === questions.length) {
       navigate("Decks", {
         screen: "QuizSummary",
-        params: { deckTitle: deckTitle, score: score, questions: questions },
+        params: { deckTitle: deckTitle, score: score, numberOfQuestions: questions.length },
       });
     } else
       this.setState((prevState) => ({
@@ -55,23 +58,11 @@ class Quiz extends Component {
 
   render() {
     let { questions, currentQuestion, score, answerShown } = this.state;
-    const { deckTitle } = this.props.route.params;
 
     if (questions.length === 0) {
       return (
         <View>
           <Text>Deck is empty</Text>
-          <TouchableOpacity
-            style={styles.item}
-            onPress={() =>
-              this.props.navigation.navigate("Decks", {
-                screen: "NewQuestion",
-                params: { deckTitle: deckTitle },
-              })
-            }
-          >
-            <Text style={styles.item}>Add Card</Text>
-          </TouchableOpacity>
         </View>
       );
     } else {

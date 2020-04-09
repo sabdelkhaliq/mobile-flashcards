@@ -2,11 +2,11 @@ import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 export default function QuizSummary({ route, navigation }) {
-  const { score, questions, deckTitle } = route.params;
+  const { score, numberOfQuestions, deckTitle } = route.params;
 
   return (
     <View>
-      <Text>{`You answered ${score} correct out of ${questions.length} Questions}`}</Text>
+      <Text>{`You answered ${score} correct out of ${numberOfQuestions} Questions}`}</Text>
 
       <TouchableOpacity
         onPress={() =>
@@ -23,7 +23,8 @@ export default function QuizSummary({ route, navigation }) {
         onPress={() =>
           navigation.navigate("Decks", {
             screen: "Quiz",
-            params: { questions: questions },
+            params: { 
+            deckTitle: deckTitle},
           })
         }
       >
