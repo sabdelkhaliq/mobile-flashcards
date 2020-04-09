@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, StyleSheet } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { isDeckTitleRepeated, addDeck } from "../utils/Storage";
+import { StyleSheet, Text, TextInput, View,TouchableOpacity } from "react-native";
 import { withGlobalContext } from "../MyContext";
+import { addDeck, isDeckTitleRepeated } from "../utils/Storage";
 
 class NewDeck extends Component {
   constructor({ props }) {

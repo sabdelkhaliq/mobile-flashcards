@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
-import DeckCard from "./DeckCard";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import { withGlobalContext } from "../MyContext";
+import DeckCard from "./DeckCard";
 
 class DeckList extends Component {
   constructor({ props }) {
@@ -10,7 +10,7 @@ class DeckList extends Component {
 
   render() {
     let { decks } = this.props.global;
-    let {navigation} = this.props;
+    let { navigation } = this.props;
     if (decks) {
       decks = Object.values(decks);
       return (
@@ -18,7 +18,9 @@ class DeckList extends Component {
           <FlatList
             style={styles.item}
             data={decks}
-            renderItem={({ item }) => <DeckCard navigation={navigation} deck={item}></DeckCard>}
+            renderItem={({ item }) => (
+              <DeckCard navigation={navigation} deck={item}></DeckCard>
+            )}
             keyExtractor={(item) => item.title}
           />
         </View>

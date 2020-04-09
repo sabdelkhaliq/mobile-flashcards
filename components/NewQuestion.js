@@ -1,6 +1,11 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { withGlobalContext } from "../MyContext";
 import { addQuestion, isQuestionRepeatedInDeck } from "../utils/Storage";
 
@@ -22,8 +27,6 @@ class NewQuestion extends Component {
     const { deckTitle } = this.props.route.params;
     const { answer, question } = this.state;
     const { navigation } = this.props;
-    let { resetStateFlag } = this.props.global;
-
 
     if (!question) this.setState({ error: "Enter the question of the card" });
     else if (!answer) this.setState({ error: "Enter an answer" });

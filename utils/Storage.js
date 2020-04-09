@@ -1,5 +1,9 @@
 import { AsyncStorage } from "react-native";
-import { DECKS_STORAGE_KEY, QUESTION_STORAGE_KEY } from "./StorageKeys";
+import {
+  DECKS_STORAGE_KEY,
+  QUESTION_STORAGE_KEY,
+  NOTIFICATION_KEY,
+} from "./StorageKeys";
 // Deck:
 // {"title":"deck","questions":[1,2,3]}
 
@@ -65,7 +69,6 @@ export function addQuestion(question, deckId, refereshDecks) {
         data = JSON.parse(data);
         let deck = data[deckId];
         deck.questions.push(question.question);
-        console.log("adding new decks");
         data[deckId] = deck;
         return data;
       })
@@ -89,16 +92,17 @@ export function clearStorage() {
   AsyncStorage.clear();
 }
 
-// // export function addQuestionToDeck ({ questionData, deckId }) {
-// //     return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
-// //       [deckId]: deckData
-// //     }))
-// //   }
+////////////Notifications
+export function removeNotifications() {
+  AsyncStorage.removeItem(NOTIFICATION_KEY).then(
+    Notifications.cancelAllScheduledNotificationsAsync
+  );
+}
 
-// // export function removeEntry (key) {
-// return AsyncStorage.getItem(CALENDAR_STORAGE_KEY).then((results) => {
-//   const data = JSON.parse(results);
-//   data[key] = undefined;
-//   delete data[key];
-//   AsyncStorage.setItem(CALENDAR_STORAGE_KEY, JSON.stringify(data));
-// });
+export function getNotification() {
+  return AsyncStorage.getItem(NOTIFICATION_KEY);
+}
+
+export function setNotification() {
+  AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true));
+}

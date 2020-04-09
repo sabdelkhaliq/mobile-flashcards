@@ -3,13 +3,10 @@ import { StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { withGlobalContext } from "../MyContext";
 
-
 class Deck extends Component {
   constructor({ props }) {
     super(props);
-
   }
-
 
   render() {
     const { navigation } = this.props;
@@ -23,7 +20,6 @@ class Deck extends Component {
       let decksArr = Object.values(decks);
       const deck = decksArr[decksArr.findIndex((d) => d.title === deckTitle)];
 
-      
       return (
         <View style={styles.container}>
           <Text style={styles.item}>{deck.title}</Text>
@@ -44,8 +40,9 @@ class Deck extends Component {
             onPress={() =>
               navigation.navigate("Decks", {
                 screen: "Quiz",
-                params: { 
-                  deckTitle: deckTitle },
+                params: {
+                  deckTitle: deckTitle,
+                },
               })
             }
           >

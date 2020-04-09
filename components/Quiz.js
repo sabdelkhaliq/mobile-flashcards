@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { clearLocalNotification } from "../utils/Notifications";
 import { getQuestionsInDeck } from "../utils/Storage";
-import { StackActions, NavigationActions } from "react-navigation";
 
 class Quiz extends Component {
   constructor({ props }) {
@@ -36,6 +36,7 @@ class Quiz extends Component {
     const { deckTitle } = this.props.route.params;
     const { navigation } = this.props;
     if (currentQuestion === questions.length) {
+      clearLocalNotification().then(setLocalNotification);
       navigation.navigate("Decks", {
         screen: "QuizSummary",
         params: {

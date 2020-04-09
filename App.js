@@ -3,7 +3,8 @@ import { StyleSheet } from "react-native";
 import Tabs from "./navigators/Tabs";
 import { fetchAllDecks, clearStorage } from "./utils/Storage";
 import MyContext from "./MyContext";
-
+import { setLocalNotification } from './utils/Notifications'
+ 
 export default class App extends Component {
   constructor({ props }) {
     super(props);
@@ -16,6 +17,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    setLocalNotification();
     this.fetchDecks();
   }
 
@@ -23,10 +25,7 @@ export default class App extends Component {
     this.resetStateFlag();
     fetchAllDecks()
       .then((decks) => {
-        console.log("2222");
         this.setState({ decks: decks });
-        console.log("Fetch Decks........");
-        console.log(this.state.decks);
         this.setState({ stateFlag: true });
       })
   }
