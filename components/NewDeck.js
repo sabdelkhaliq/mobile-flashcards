@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, TextInput, View,TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import { withGlobalContext } from "../MyContext";
 import { addDeck, isDeckTitleRepeated } from "../utils/Storage";
 
@@ -49,16 +55,17 @@ class NewDeck extends Component {
     return (
       <View style={styles.container}>
         <TextInput
+          style={styles.button}
           placeholder="Deck Title"
           value={this.state.title}
           onChangeText={this.onChangeDeckTitle}
         ></TextInput>
         <TouchableOpacity
-          style={styles.button}
+          style={(styles.button, { backgroundColor: "#DDDDDD" })}
           onPress={this.addNewDeck}
           disabled={Boolean(this.state.error)}
         >
-          <Text>Add Deck</Text>
+          <Text style={styles.textButton}>Add Deck</Text>
         </TouchableOpacity>
         <Text>{this.state.error}</Text>
       </View>
@@ -69,12 +76,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    paddingHorizontal: 10,
+    margin: 5,
   },
   button: {
-    alignItems: "center",
-    backgroundColor: "#DDDDDD",
     padding: 10,
+    alignItems: "center",
+    alignSelf: "center",
+    margin: 5,
+    marginBottom: 25,
+    width: "90%",
+  },
+  textButton: {
+    fontSize: 20,
+    padding: 10,
+    alignSelf: "center",
+    fontWeight: "bold",
+    color: "#6D6D6D",
   },
 });
 

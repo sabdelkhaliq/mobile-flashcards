@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { withGlobalContext } from "../MyContext";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 class Deck extends Component {
   constructor({ props }) {
@@ -22,21 +23,24 @@ class Deck extends Component {
 
       return (
         <View style={styles.container}>
-          <Text style={styles.item}>{deck.title}</Text>
-          <Text style={styles.item}>{`${deck.questions.length} cards`}</Text>
+          <Text style={styles.text}>{deck.title}</Text>
+          <Text style={styles.text}>{`${deck.questions.length} cards`}</Text>
           <TouchableOpacity
-            style={styles.item}
+            style={styles.button}
             onPress={() =>
               navigation.navigate("Decks", {
-                screen: "NewQuestion",
+                screen: "New Question",
                 params: { deckTitle: deck.title },
               })
             }
           >
-            <Text style={styles.item}>Add Card</Text>
+            <Text style={(styles.textButton)}>Add Card</Text>
+            
+            
+
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.item}
+            style={styles.button}
             onPress={() =>
               navigation.navigate("Decks", {
                 screen: "Quiz",
@@ -46,7 +50,7 @@ class Deck extends Component {
               })
             }
           >
-            <Text style={styles.item}>Take Quiz</Text>
+            <Text style={(styles.textButton)}>Take Quiz</Text>
           </TouchableOpacity>
         </View>
       );
@@ -58,12 +62,30 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F5FCFF",
+    alignItems: "stretch",
   },
-  item: {
-    backgroundColor: "#F5FCFF",
-    alignSelf: "stretch",
+  textButton: {
+    fontSize: 15,
+    padding: 10,
+    alignSelf: "center",
+    fontWeight: "bold",
+    color: "#6D6D6D",
+  },
+  text: {
+    fontSize: 35,
+    padding: 10,
+    paddingBottom: 25,
+    alignSelf: "center",
+    color: "#6D6D6D"
+  },
+  button: {
+    flex: 1,
+    backgroundColor: "#DDDDDD",
+    padding: 10,
+    alignItems: "center",
+    alignSelf: "center",
+    margin: 5,
+    width: "90%"
   },
 });
 

@@ -1,6 +1,6 @@
 import * as Permissions from 'expo-permissions';
 import { Notifications } from 'expo';
-import { removeNotifications, getNotification, setNotification } from "./Storage";
+import { getNotification, setNotification } from "./Storage";
 
 function createNotification() {
   return {
@@ -16,10 +16,6 @@ function createNotification() {
       vibrate: true,
     },
   };
-}
-
-export function clearLocalNotification() {
-  return removeNotifications();
 }
 
 export function setLocalNotification() {

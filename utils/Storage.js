@@ -4,6 +4,7 @@ import {
   QUESTION_STORAGE_KEY,
   NOTIFICATION_KEY,
 } from "./StorageKeys";
+import { Notifications } from "expo";
 // Deck:
 // {"title":"deck","questions":[1,2,3]}
 
@@ -44,11 +45,13 @@ export function fetchAllDecks() {
 export function getQuestionsInDeck(deckTitle) {
   return AsyncStorage.getItem(QUESTION_STORAGE_KEY).then((result) => {
     result = JSON.parse(result);
-    let questions = Object.values(result);
-    let questionsArr = questions.filter(
-      (question) => question.deckTitle.localeCompare(deckTitle) === 0
-    );
-    return questionsArr;
+    if (result) {
+      let questions = Object.values(result);
+      let questionsArr = questions.filter(
+        (question) => question.deckTitle.localeCompare(deckTitle) === 0
+      );
+      return questionsArr;
+    }
   });
 }
 

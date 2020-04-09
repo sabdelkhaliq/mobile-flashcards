@@ -7,10 +7,13 @@ export default function QuizSummary({ route, navigation }) {
     route.params.onClose();
   });
   return (
-    <View>
-      <Text>{`You answered ${score} correct out of ${numberOfQuestions} Questions`}</Text>
+    <View style={styles.container}>
+      <Text
+        style={styles.text}
+      >{`You answered ${score} correct out of ${numberOfQuestions} Questions`}</Text>
 
       <TouchableOpacity
+        style={styles.button}
         onPress={() =>
           navigation.navigate("Decks", {
             screen: "Deck",
@@ -18,10 +21,10 @@ export default function QuizSummary({ route, navigation }) {
           })
         }
       >
-        <Text style={styles.item}>Back to Deck</Text>
+        <Text style={styles.text}>Back to Deck</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.item}
+        style={styles.button}
         onPress={() =>
           navigation.navigate("Decks", {
             screen: "Quiz",
@@ -31,7 +34,7 @@ export default function QuizSummary({ route, navigation }) {
           })
         }
       >
-        <Text style={styles.item}>Restart Quiz</Text>
+        <Text style={styles.text}>Restart Quiz</Text>
       </TouchableOpacity>
     </View>
   );
@@ -41,12 +44,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F5FCFF",
+    alignItems: "stretch",
   },
-  item: {
-    backgroundColor: "#F5FCFF",
-    alignSelf: "stretch",
+  textButton: {
+    fontSize: 15,
+    padding: 10,
+    alignSelf: "center",
+    fontWeight: "bold",
+    color: "#6D6D6D",
+  },
+  text: {
+    fontSize: 35,
+    padding: 10,
+    paddingBottom: 25,
+    alignSelf: "center",
+  },
+  button: {
+    backgroundColor: "#DDDDDD",
+    padding: 10,
     alignItems: "center",
+    alignSelf: "center",
+    margin: 5,
+    width: "90%",
   },
 });

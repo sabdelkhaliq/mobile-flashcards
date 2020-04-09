@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
-import { withGlobalContext } from "../MyContext";
+import { FlatList, Text, View, StyleSheet } from "react-native";
 import DeckCard from "./DeckCard";
+import { withGlobalContext } from "../MyContext";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 class DeckList extends Component {
   constructor({ props }) {
@@ -28,7 +29,8 @@ class DeckList extends Component {
     } else
       return (
         <View style={styles.container}>
-          <Text style={styles.item}>Start adding your decks</Text>
+          <Text style={styles.text}>Start adding your decks</Text>
+          <MaterialCommunityIcons name="cards" size={32} />
         </View>
       );
   }
@@ -39,11 +41,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F5FCFF",
   },
   item: {
     backgroundColor: "#F5FCFF",
     alignSelf: "stretch",
+  },
+  text: {
+    fontSize: 25,
+    padding: 10,
+    paddingBottom: 25,
+    alignSelf: "center",
+    color: "#6D6D6D"
   },
 });
 

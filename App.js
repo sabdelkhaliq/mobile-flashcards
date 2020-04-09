@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { StyleSheet } from "react-native";
-import Tabs from "./navigators/Tabs";
-import { fetchAllDecks, clearStorage } from "./utils/Storage";
 import MyContext from "./MyContext";
-import { setLocalNotification } from './utils/Notifications'
- 
+import Tabs from "./navigators/Tabs";
+import { setLocalNotification } from "./utils/Notifications";
+import { clearStorage, fetchAllDecks } from "./utils/Storage";
+
 export default class App extends Component {
   constructor({ props }) {
     super(props);
@@ -17,17 +16,17 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    clearStorage();
     setLocalNotification();
     this.fetchDecks();
   }
 
   fetchDecks() {
     this.resetStateFlag();
-    fetchAllDecks()
-      .then((decks) => {
-        this.setState({ decks: decks });
-        this.setState({ stateFlag: true });
-      })
+    fetchAllDecks().then((decks) => {
+      this.setState({ decks: decks });
+      this.setState({ stateFlag: true });
+    });
   }
 
   resetStateFlag() {
@@ -48,12 +47,3 @@ export default class App extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F5FCFF",
-  },
-});

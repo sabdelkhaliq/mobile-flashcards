@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { clearLocalNotification } from "../utils/Notifications";
-import { getQuestionsInDeck } from "../utils/Storage";
+import { getQuestionsInDeck, removeNotifications } from "../utils/Storage";
+import * as Permissions from 'expo-permissions';
+
 
 class Quiz extends Component {
   constructor({ props }) {
@@ -36,9 +37,13 @@ class Quiz extends Component {
     const { deckTitle } = this.props.route.params;
     const { navigation } = this.props;
     if (currentQuestion === questions.length) {
-      clearLocalNotification().then(setLocalNotification);
+      Permissions.askAsync(Permissions.NOTIFICATIONS).then(({ status }) => {
+        if (status === "granted") {
+          removeNotifications().then(setLocalNotification);
+        }
+      });
       navigation.navigate("Decks", {
-        screen: "QuizSummary",
+        screen: "Quiz Summary",
         params: {
           deckTitle: deckTitle,
           score: score,
@@ -67,28 +72,33 @@ class Quiz extends Component {
   render() {
     let { questions, currentQuestion, score, answerShown } = this.state;
 
-    if (questions.length === 0) {
+    if (!questions || questions.length === 0) {
       return (
-        <View>
-          <Text>Deck is empty</Text>
+        <View style={styles.container}>
+          <Text style={styles.text}>Deck is empty</Text>
         </View>
       );
     } else {
       return (
-        <View>
-          <Text>{`${currentQuestion} / ${questions.length}`}</Text>
-          <Text>
+        <View style={styles.container}>
+          <Text
+            style={styles.text}
+          >{`${currentQuestion} / ${questions.length}`}</Text>
+          <Text style={styles.text}>
             {!answerShown
-              ? questions[currentQuestion - 1].question
-              : questions[currentQuestion - 1].answer}
+              ? `Q: ${questions[currentQuestion - 1].question} ?`
+              : `A: ${questions[currentQuestion - 1].answer}`}
           </Text>
-          <TouchableOpacity onPress={this.toggleAnswer}>
+          <TouchableOpacity style={styles.button} onPress={this.toggleAnswer}>
             <Text>Show answer</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.answerCorrect}>
+          <TouchableOpacity style={styles.button} onPress={this.answerCorrect}>
             <Text>Correct Answer</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.checkRemainingQuestions}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={this.checkRemainingQuestions}
+          >
             <Text>Wrong Answer</Text>
           </TouchableOpacity>
         </View>
@@ -101,13 +111,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F5FCFF",
+    alignItems: "stretch",
   },
-  item: {
-    backgroundColor: "#F5FCFF",
-    alignSelf: "stretch",
+  textButton: {
+    fontSize: 15,
+    padding: 10,
+    alignSelf: "center",
+    fontWeight: "bold",
+    color: "#6D6D6D",
+  },
+  text: {
+    fontSize: 35,
+    padding: 10,
+    paddingBottom: 25,
+    alignSelf: "center",
+  },
+  button: {
+    backgroundColor: "#DDDDDD",
+    padding: 10,
     alignItems: "center",
+    alignSelf: "center",
+    margin: 5,
+    width: "90%",
   },
 });
 

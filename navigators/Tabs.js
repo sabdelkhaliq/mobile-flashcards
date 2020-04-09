@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import DeckList from "../components/DeckList";
 import NewDeck from "../components/NewDeck";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Deck from "../components/Deck";
 import DeckCard from "../components/DeckCard";
@@ -15,8 +15,8 @@ const Stack = createStackNavigator();
 
 function Decks() {
   return (
-    <Stack.Navigator initialRouteName="DeckList" headerMode="screen">
-      <Stack.Screen name="DeckList" component={DeckList} />
+    <Stack.Navigator initialRouteName="Deck List" headerMode="screen">
+      <Stack.Screen name="Deck List" component={DeckList} />
       <Stack.Screen
         name="Deck"
         component={Deck}
@@ -32,7 +32,7 @@ function Decks() {
         }}
       />
       <Stack.Screen
-        name="NewQuestion"
+        name="New Question"
         component={NewQuestion}
         options={{
           tabBarVisible: false,
@@ -46,7 +46,7 @@ function Decks() {
         }}
       />
       <Stack.Screen
-        name="QuizSummary"
+        name="Quiz Summary"
         component={QuizSummary}
         options={{ headerShown: false, tabBarVisible: false }}
       />
@@ -62,7 +62,10 @@ export default class Tabs extends Component {
     }
     return true;
   }
+  
   render() {
+
+    
     return (
       <NavigationContainer>
         <Tab.Navigator>

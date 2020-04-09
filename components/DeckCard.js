@@ -1,27 +1,50 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Animated, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Card } from "react-native-elements";
 
 class DeckCard extends Component {
   constructor({ props }) {
     super(props);
+    this.state = {
+      fadeAnim: new Animated.Value(1),
+    };
+    this.fadeOut = this.fadeOut.bind(this);
   }
+  
+  fadeOut = () => {
+    let { deck, navigation } = this.props;
+    Animated.timing(this.state.fadeAnim, {
+      toValue: .5,
+      duration: 50,
+    }).start(() =>
+      navigation.navigate("Decks", {
+        screen: "Deck",
+        params: { deckTitle: deck.title },
+      })
+    );
+  };
 
   render() {
-    let { deck, navigation } = this.props;
+    let { deck } = this.props;
     return (
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate("Decks", {
-            screen: "Deck",
-            params: { deckTitle: deck.title },
-          })
-        }
-      >
-        <Card containerStyle={styles.container} title={deck.title}>
-          <Text>{`${deck.questions.length} cards`}</Text>
-        </Card>
-      </TouchableOpacity>
+      <View style={styles.container}>
+        
+        <Animated.View
+          style={[
+            styles.fadingContainer,
+            {
+              opacity: this.state.fadeAnim,
+            },
+          ]}
+        >
+          <TouchableOpacity onPress={this.fadeOut}>
+          <Card containerStyle={styles.card} title={deck.title}>
+            <Text>{`${deck.questions.length} cards`}</Text>
+          </Card>
+          </TouchableOpacity>
+        </Animated.View>
+        
+      </View>
     );
   }
 }
@@ -31,11 +54,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F5FCFF",
   },
-  item: {
-    backgroundColor: "#F5FCFF",
+  fadingContainer: {
+    flex:1,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
     alignSelf: "stretch",
+  },
+  card: {
+    backgroundColor: "#DDDDDD",
+    alignSelf: "stretch",
+    alignItems: "center",
   },
 });
 
