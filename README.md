@@ -4,10 +4,7 @@
 
 Mobile Flashcards is a mobile app that users can use to create decks of infinite questions. After creating a deck user can add questions to a deck and can also take quizes of any deck and check his total score.
 
-![1](https://i.imgur.com/gyfB0Pz.jpg)
-![2](https://i.imgur.com/RRGweWv.jpg)
-![alt text](http://url/to/img.png)
-
+![1](https://i.imgur.com/aJudyTo.jpg) ![2](https://i.imgur.com/k1c6KL9.jpg) ![3](https://i.imgur.com/Y8R12sG.jpg) ![4](https://i.imgur.com/hu3YB85.jpg)
 
 ## Installation
 
