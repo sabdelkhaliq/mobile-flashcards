@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { getQuestionsInDeck } from "../utils/Storage";
+import { StackActions, NavigationActions } from "react-navigation";
 
 class Quiz extends Component {
   constructor({ props }) {
@@ -20,7 +21,7 @@ class Quiz extends Component {
   componentDidMount() {
     const { deckTitle } = this.props.route.params;
     getQuestionsInDeck(deckTitle).then((result) => {
-      this.setState({questions:result});
+      this.setState({ questions: result });
     });
   }
 
@@ -33,12 +34,18 @@ class Quiz extends Component {
   checkRemainingQuestions() {
     let { questions, currentQuestion, score } = this.state;
     const { deckTitle } = this.props.route.params;
-    const { navigate } = this.props.navigation;
-
+    const { navigation } = this.props;
     if (currentQuestion === questions.length) {
-      navigate("Decks", {
+      navigation.navigate("Decks", {
         screen: "QuizSummary",
-        params: { deckTitle: deckTitle, score: score, numberOfQuestions: questions.length },
+        params: {
+          deckTitle: deckTitle,
+          score: score,
+          numberOfQuestions: questions.length,
+          onClose: () => {
+            this.setState({ currentQuestion: 1, score: 0, answerShown: false });
+          },
+        },
       });
     } else
       this.setState((prevState) => ({
@@ -70,7 +77,7 @@ class Quiz extends Component {
         <View>
           <Text>{`${currentQuestion} / ${questions.length}`}</Text>
           <Text>
-            {answerShown
+            {!answerShown
               ? questions[currentQuestion - 1].question
               : questions[currentQuestion - 1].answer}
           </Text>

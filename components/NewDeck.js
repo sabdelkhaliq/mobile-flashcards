@@ -19,7 +19,6 @@ class NewDeck extends Component {
   addNewDeck() {
     let { title } = this.state;
     let { navigation } = this.props;
-    let { resetStateFlag } = this.props.global;
 
     const questions = [];
 
