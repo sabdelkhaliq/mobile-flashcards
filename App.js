@@ -16,7 +16,6 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    clearStorage();
     setLocalNotification();
     this.fetchDecks();
   }

@@ -34,10 +34,7 @@ class Deck extends Component {
               })
             }
           >
-            <Text style={(styles.textButton)}>Add Card</Text>
-            
-            
-
+            <Text style={styles.textButton}>Add Card</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
@@ -50,7 +47,7 @@ class Deck extends Component {
               })
             }
           >
-            <Text style={(styles.textButton)}>Take Quiz</Text>
+            <Text style={styles.textButton}>Take Quiz</Text>
           </TouchableOpacity>
         </View>
       );

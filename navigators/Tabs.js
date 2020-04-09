@@ -48,7 +48,7 @@ function Decks() {
       <Stack.Screen
         name="Quiz Summary"
         component={QuizSummary}
-        options={{ headerShown: false, tabBarVisible: false }}
+        options={{  tabBarVisible: false, headerShown: false }}
       />
     </Stack.Navigator>
   );

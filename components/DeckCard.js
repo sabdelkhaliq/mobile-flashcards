@@ -10,12 +10,12 @@ class DeckCard extends Component {
     };
     this.fadeOut = this.fadeOut.bind(this);
   }
-  
+
   fadeOut = () => {
     let { deck, navigation } = this.props;
     Animated.timing(this.state.fadeAnim, {
       toValue: .5,
-      duration: 50,
+      duration: 1500,
     }).start(() =>
       navigation.navigate("Decks", {
         screen: "Deck",
