@@ -20,6 +20,10 @@ Mobile Flashcards is a mobile app that users can use to create decks of infinite
     - $ expo start
 - Open a web browser and go to http://localhost:19001/ then you can choose to run the app using web simulator or any other options.
 
+## Testing
+
+The app was mainly designed for Android platform and was tested with Samsung Galaxy Note 9.
+
 ### Create React Native App
 
 The project was bootstrapped with [Create React App](https://github.com/react-community/create-react-native-app).
